@@ -1,0 +1,13 @@
+{
+  "schemaVersion": 1,
+  "approvals": [
+    {
+      "sha256": "replace-with-exact-source-file-sha256",
+      "approved": true,
+      "licenseId": "OFL-1.1",
+      "evidence": "URL or internal review reference proving web redistribution is allowed",
+      "reviewedBy": "wxd",
+      "reviewedAt": "2026-08-24T00:00:00Z"
+    }
+  ]
+}

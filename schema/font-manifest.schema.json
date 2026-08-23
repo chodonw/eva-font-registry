@@ -1,0 +1,28 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://font.evainc.cn/schema/font-manifest.schema.json",
+  "title": "Eva Font Registry public manifest",
+  "type": "object",
+  "required": ["schemaVersion", "generatedAt", "fonts"],
+  "properties": {
+    "schemaVersion": { "const": 1 },
+    "generatedAt": { "type": "string", "format": "date-time" },
+    "baseUrl": { "type": "string", "format": "uri" },
+    "fonts": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["family", "weight", "style", "licenseId", "sha256", "url"],
+        "properties": {
+          "family": { "type": "string" },
+          "subfamily": { "type": ["string", "null"] },
+          "weight": { "type": "integer", "minimum": 1, "maximum": 1000 },
+          "style": { "enum": ["normal", "italic", "oblique"] },
+          "licenseId": { "type": "string" },
+          "sha256": { "type": "string", "pattern": "^[0-9a-f]{64}$" },
+          "url": { "type": "string", "format": "uri" }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,14 @@
+import { NextResponse } from 'next/server';
+
+export const dynamic = 'force-static';
+
+export function GET() {
+  return NextResponse.json({
+    schemaVersion: 1,
+    generatedAt: '2026-08-24T00:00:00.000Z',
+    registry: 'https://font.evainc.cn',
+    css: 'https://font.evainc.cn/fonts.css',
+    fonts: [],
+    notice: '字体在授权确认、WOFF2 构建与 FontBakery 检查全部通过后才会出现在此清单。',
+  }, { headers: { 'Access-Control-Allow-Origin': '*', 'Cache-Control': 'public, max-age=300' } });
+}
