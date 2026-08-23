@@ -93,6 +93,8 @@ Cloudflare/Sites 环境变量：
 const manifestUrl = "https://font.evainc.cn/font-manifest.json";
 ```
 
+`font.evainc.cn/public/*` 由站点以同域只读方式代理 COS 的 `public/*`；它不会转发到 `raw/*`，因此 Web 和小程序只需配置一个业务域名。
+
 公开清单现在刻意为空；在没有完成授权复核前，不会把任何现有字体二进制放入 `public/*`。
 
 ## License
