@@ -56,8 +56,11 @@ uv run eva-font quality "/path/to/iCloud/Fonts" \
 uv run eva-font build "/path/to/iCloud/Fonts" \
   --inventory private/inventory.json \
   --approvals private/approvals.json \
-  --output dist-public/fonts \
-  --base-url https://font.evainc.cn/public/fonts
+  --output dist-public \
+  --base-url https://font.evainc.cn/public
+
+# 审批、FontBakery 和构建全部通过后，才执行公开上传
+./scripts/publish-cos.sh dist-public
 ```
 
 传入 `--text-file config/subset-*.txt` 可构建指定字符集；不传时保留完整字符集，仅转换 WOFF2。

@@ -111,6 +111,8 @@ def build(source: Path, inventory_path: Path, approvals_path: Path, output: Path
     subset_text = text_file.read_text(encoding="utf-8") if text_file else None
     records: list[dict[str, Any]] = []
     output.mkdir(parents=True, exist_ok=True)
+    fonts_output = output / "fonts"
+    fonts_output.mkdir(parents=True, exist_ok=True)
 
     for asset in inventory.get("assets", []):
         approval = approvals.get(asset["sha256"])
@@ -133,13 +135,13 @@ def build(source: Path, inventory_path: Path, approvals_path: Path, output: Path
                     subsetter.subset(font)
                 font.flavor = "woff2"
                 filename = f"{_slug(face['family'])}-{_slug(face.get('subfamily') or 'regular')}-{asset['sha256'][:10]}.woff2"
-                font.save(output / filename, reorderTables=True)
+                font.save(fonts_output / filename, reorderTables=True)
             finally:
                 font.close()
             records.append({
                 "family": face["family"], "subfamily": face.get("subfamily"), "weight": face["weight"],
                 "style": face["style"], "licenseId": approval["licenseId"], "sha256": asset["sha256"],
-                "url": f"{base_url.rstrip('/')}/{filename}", "file": filename,
+                "url": f"{base_url.rstrip('/')}/fonts/{filename}", "file": f"fonts/{filename}",
             })
     write_release_files(records, output, base_url)
     print(f"release: {len(records)} approved faces -> {output}")
@@ -178,7 +180,8 @@ def parser() -> argparse.ArgumentParser:
     build_cmd = commands.add_parser("build", help="build WOFF2 for exact approved hashes only")
     build_cmd.add_argument("source", type=Path); build_cmd.add_argument("--inventory", type=Path, required=True)
     build_cmd.add_argument("--approvals", type=Path, required=True); build_cmd.add_argument("--output", type=Path, required=True)
-    build_cmd.add_argument("--base-url", required=True); build_cmd.add_argument("--text-file", type=Path)
+    build_cmd.add_argument("--base-url", required=True, help="public prefix, e.g. https://font.evainc.cn/public")
+    build_cmd.add_argument("--text-file", type=Path)
     quality_cmd = commands.add_parser("quality", help="run FontBakery on approved source fonts")
     quality_cmd.add_argument("source", type=Path); quality_cmd.add_argument("--inventory", type=Path, required=True)
     quality_cmd.add_argument("--approvals", type=Path, required=True)
