@@ -38,7 +38,7 @@ iCloud Fonts ──sync──> COS raw/* (private)
 - `font.evainc.cn`（单数）是本项目的公开 Registry：负责授权门禁、公开 CSS/manifest、微信小程序/Web 交付，以及只对 `wxd`、`lyn` 开放的 Eva ID 验证入口。
 - 两端共用同一个私有 COS bucket；新项目只允许 `public/*` 匿名读取，现有管理面不能绕过 SHA-256 审批把 `raw/*` 变成公开资源。
 
-`makers-site/` 是面向中国网络的 EdgeOne Makers 部署包。它使用 Edge Functions 代理 Eva ID OTP 和 COS 的 `public/*`，登录会话由独立 HMAC 密钥签名，不保存或下发 Penpot 的上游 token。
+`edge-function/registry.js` 是 `font.evainc.cn` 的生产 EdgeOne Edge Function：它代理 Eva ID OTP、COS 公开产物和 Registry 静态页面，登录会话由独立 HMAC 密钥签名，不保存或下发 Penpot 的上游 token。`makers-site/` 保留为可独立部署的 EdgeOne Pages/Makers 版本。
 
 ## 本地使用
 
@@ -99,6 +99,17 @@ edgeone makers deploy makers-site -n eva-font-registry -e production -a global
 ```
 
 生产环境必须设置 `EVA_SESSION_SECRET`；可选设置 `EVA_AUTH_BASE_URL` 与 `EVA_OTP_APPLICATION`。部署细节见 [`makers-site/README.md`](./makers-site/README.md)。
+
+现有 EdgeOne 加速域名的生产部署使用 `edge-function/registry.js`，并在 Edge Function Runtime Environment 中设置：
+
+| 变量 | 类型 | 值 |
+| --- | --- | --- |
+| `EVA_SESSION_SECRET` | Secret | 独立随机密钥，不进入仓库 |
+| `EVA_AUTH_BASE_URL` | String | `https://design.evainc.cn` |
+| `EVA_OTP_APPLICATION` | String | `penpot` |
+| `COS_ORIGIN` | String | 当前私有 COS bucket 的公网 origin |
+
+触发规则只匹配 `font.evainc.cn`；它不修改 `fonts.evainc.cn` 的现有上传、预览和 Penpot 管理服务。
 
 ## 消费方式
 
