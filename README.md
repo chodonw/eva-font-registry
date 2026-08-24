@@ -32,6 +32,14 @@ iCloud Fonts ──sync──> COS raw/* (private)
 - 审批以源文件 SHA-256 为准；文件变化后必须重新审核。
 - 当前管理端只允许 `wxd`（owner）与 `lyn`（editor），复用 `design.evainc.cn` 的 Eva ID 手机验证码验证，再建立本站独立的 12 小时会话。
 
+## 现有系统与新 Registry 的分工
+
+- `fonts.evainc.cn`（复数）保留为现有字体库管理面：字体档案、上传、预览与 Penpot 同步继续留在原系统，避免尚未正式使用的能力被重复重写。
+- `font.evainc.cn`（单数）是本项目的公开 Registry：负责授权门禁、公开 CSS/manifest、微信小程序/Web 交付，以及只对 `wxd`、`lyn` 开放的 Eva ID 验证入口。
+- 两端共用同一个私有 COS bucket；新项目只允许 `public/*` 匿名读取，现有管理面不能绕过 SHA-256 审批把 `raw/*` 变成公开资源。
+
+`makers-site/` 是面向中国网络的 EdgeOne Makers 部署包。它使用 Edge Functions 代理 Eva ID OTP 和 COS 的 `public/*`，登录会话由独立 HMAC 密钥签名，不保存或下发 Penpot 的上游 token。
+
 ## 本地使用
 
 Python 流水线推荐使用 [uv](https://docs.astral.sh/uv/)：
@@ -83,6 +91,14 @@ Cloudflare/Sites 环境变量：
 | `EVA_LYN_PHONE_SHA256` | 可选：允许用 lyn 的手机号直接输入登录 | 未设置 |
 
 不设置手机号哈希时仍可用 `wxd` / `lyn` 作为 Eva ID 登录，验证码会发送到各自当前绑定手机。
+
+EdgeOne Makers 部署使用：
+
+```bash
+edgeone makers deploy makers-site -n eva-font-registry -e production -a global
+```
+
+生产环境必须设置 `EVA_SESSION_SECRET`；可选设置 `EVA_AUTH_BASE_URL` 与 `EVA_OTP_APPLICATION`。部署细节见 [`makers-site/README.md`](./makers-site/README.md)。
 
 ## 消费方式
 

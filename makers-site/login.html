@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="zh-CN">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>管理登录 · Eva Font Registry</title><link rel="stylesheet" href="/styles.css"></head>
+<body class="auth-page">
+  <main class="auth-shell">
+    <a class="brand" href="/"><span>e:</span> Font Registry</a>
+    <section class="auth-card">
+      <p class="eyebrow">Private console</p>
+      <h1>Eva ID 登录</h1>
+      <p class="auth-copy">验证码会发送到 Eva ID 已绑定的手机号。当前仅开放给 <strong>wxd</strong> 与 <strong>lyn</strong>。</p>
+      <form id="login-form">
+        <label for="identifier">Eva ID</label>
+        <input id="identifier" name="identifier" autocomplete="username" placeholder="wxd 或 lyn" required>
+        <div id="code-row" hidden>
+          <label for="code">6 位验证码</label>
+          <input id="code" name="code" inputmode="numeric" autocomplete="one-time-code" maxlength="6" pattern="[0-9]{6}" placeholder="000000">
+        </div>
+        <p class="form-status" id="form-status" role="status"></p>
+        <button class="button wide" id="submit-button" type="submit">发送验证码</button>
+      </form>
+      <a class="back-link" href="/">← 返回公开字体页</a>
+    </section>
+  </main>
+  <script src="/login.js" defer></script>
+</body>
+</html>

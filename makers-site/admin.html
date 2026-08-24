@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="zh-CN">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex"><title>字体资产概览 · Eva Font Registry</title><link rel="stylesheet" href="/styles.css"></head>
+<body class="admin-page" hidden>
+  <aside class="sidebar">
+    <a class="brand" href="/"><span>e:</span> Font Registry</a>
+    <nav><a class="active" href="#overview">概览</a><a href="#pipeline">发布流水线</a><a href="https://fonts.evainc.cn/admin">现有字体库 ↗</a><a href="/font-manifest.json">公开清单</a><a href="/fonts.css">Web CSS</a></nav>
+    <div class="admin-user"><span id="avatar">E</span><div><strong id="user-id">—</strong><small id="user-role">—</small></div><button id="logout" aria-label="退出登录">↗</button></div>
+  </aside>
+  <main class="admin-main">
+    <header class="admin-heading" id="overview"><div><p class="eyebrow">Private console</p><h1>字体资产概览</h1></div><span class="system-status"><i></i> 私有 bucket 正常</span></header>
+    <section class="numbers admin-numbers">
+      <article><span>原始文件</span><strong>1,399</strong><small>4.45 GiB · raw 私有</small></article>
+      <article><span>有效字体</span><strong>1,298</strong><small>1,579 个可识别字面</small></article>
+      <article><span>开放授权信号</span><strong>269</strong><small>OFL 219 · Apache 50，仍需确认</small></article>
+      <article><span>公开字体</span><strong id="admin-public-count">0</strong><small>未审批不发布</small></article>
+    </section>
+    <section class="pipeline" id="pipeline">
+      <header><div><p class="eyebrow">Release guard</p><h2>发布流水线</h2></div><span>审批优先</span></header>
+      <div class="stage-list">
+        <article><span>01</span><div><strong>Raw archive</strong><p>1,392 个对象已归档到 COS raw/icloud-fonts/</p></div><i class="done">完成</i></article>
+        <article><span>02</span><div><strong>License review</strong><p>默认待复核；只允许授权证据明确的字体继续</p></div><i>待处理</i></article>
+        <article><span>03</span><div><strong>WOFF2 build</strong><p>FontTools 转换，FontBakery 质量门禁</p></div><i>待处理</i></article>
+        <article><span>04</span><div><strong>Public release</strong><p>审批后才写入 public/* 并生成 CSS/manifest</p></div><i>待处理</i></article>
+      </div>
+    </section>
+  </main>
+  <script src="/admin.js" defer></script>
+</body>
+</html>

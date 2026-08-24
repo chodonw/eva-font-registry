@@ -1,0 +1,37 @@
+{
+  "redirects": [
+    {
+      "source": "/login",
+      "destination": "/login.html",
+      "statusCode": 302
+    },
+    {
+      "source": "/admin",
+      "destination": "/admin.html",
+      "statusCode": 302
+    }
+  ],
+  "headers": [
+    {
+      "source": "/*",
+      "headers": [
+        {
+          "key": "X-Content-Type-Options",
+          "value": "nosniff"
+        },
+        {
+          "key": "X-Frame-Options",
+          "value": "DENY"
+        },
+        {
+          "key": "Referrer-Policy",
+          "value": "strict-origin-when-cross-origin"
+        },
+        {
+          "key": "Content-Security-Policy",
+          "value": "default-src 'self'; img-src 'self' data:; style-src 'self'; script-src 'self'; connect-src 'self'; font-src 'self' data:"
+        }
+      ]
+    }
+  ]
+}
